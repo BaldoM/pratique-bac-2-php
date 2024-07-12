@@ -1,5 +1,5 @@
 <?php
-if (isset($_POST) && !empty($_POST))
+if (!empty($_POST))
 {
 
     $nom = $_POST['nom'];
@@ -8,7 +8,7 @@ if (isset($_POST) && !empty($_POST))
 
     include_once 'include/db.php';
 
-    $req = $cnx->prepare('INSERT INTO etudiants SET nom = :nom, postnom = :postnom, age = :age');
+    $req = $cnx->prepare('INSERT INTO etudiants (nom, postnom, age) VALUES (:nom, :postnom, :age)');
 
     $req->execute([
         'nom' => $nom,

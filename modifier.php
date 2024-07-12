@@ -2,12 +2,12 @@
 
 include_once 'include/db.php';
 
-if (isset($_POST) && !empty($_POST))
+if (!empty($_POST))
 {
     $nom = $_POST['nom'];
     $postnom = $_POST['postnom'];
-    $age = $_POST['age'];
-    $id = $_POST['id'];
+    $age = (int) $_POST['age'];
+    $id = (int) $_POST['id'];
 
     $req = $cnx->prepare('UPDATE etudiants SET nom = :nom, postnom = :postnom, age = :age WHERE id = :id');
 
@@ -23,7 +23,7 @@ if (isset($_POST) && !empty($_POST))
 }
 
 if (isset($_GET) && !empty($_GET['id'])) {
-    $req = $cnx->prepare('SELECT * FROM etudiants WHERE id = :id LIMIT 1');
+    $req = $cnx->prepare('SELECT * FROM etudiants WHERE id = :id');
 
     $req->execute([
         'id' => $_GET['id'],
