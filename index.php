@@ -23,6 +23,34 @@
         .text-center {
             text-align: center;
         }
+
+        a.btn {
+            display: inline-block;
+            padding: 5px 10px;
+            text-decoration: none;
+            border-radius: 5px;
+            border: 1px solid #2a2a2a;
+            color: #2a2a2a;
+        }
+
+        .mb1 {
+            margin-bottom: 1rem;
+        }
+
+        .btn-danger {
+            background-color: #e31b56;
+            color: #fff;
+        }
+
+        .btn-info {
+            background-color: #5bc0de;
+            color: #fff;
+        }
+
+        .btn-warning {
+            background-color: #f0ad4e;
+            color: #fff;
+        }
     </style>
 </head>
 <body>
@@ -30,14 +58,25 @@
 
 <?php
 
-$cnx = new PDO('mysql:host=localhost;dbname=bac-2', 'root', '');
+include_once 'include/db.php';
 
-$cnx->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_OBJ);
+if (isset($_GET) && !empty($_GET['id']))
+{
+    $req = $cnx->prepare('DELETE FROM etudiants WHERE id = :id');
+
+    $req->execute([
+        'id' => $_GET['id'],
+    ]);
+}
+
+
 
 $req = $cnx->prepare("SELECT * FROM etudiants");
 
 $req->execute();
 ?>
+
+<a href="creer.php" class="btn btn-info mb1">Inscrire Étudiant</a>
 
 <table>
     <thead>
@@ -46,16 +85,22 @@ $req->execute();
         <th>Nom</th>
         <th>Postnom</th>
         <th>Age</th>
+        <th width="20%">Action</th>
     </tr>
     </thead>
 
     <tbody>
-    <?php foreach ($req as $etudiant) : ?>
+    <?php $i = 1; foreach ($req as $etudiant) : ?>
     <tr>
-        <td class="text-center"></td>
+        <td class="text-center"><?= $i++; ?></td>
         <td><?php echo $etudiant->nom; ?></td>
         <td><?php echo $etudiant->postnom; ?></td>
         <td class="text-center"><?php echo $etudiant->age; ?> ans</td>
+        <td>
+            <a class='btn btn-warning'
+               href="modifier.php?id=<?php echo $etudiant->id; ?>">Modifier</a>
+            <a onclick="return confirm('Voulez-vous supprimer l\'étudiant')" class="btn btn-danger" href="index.php?id=<?php echo $etudiant->id; ?>">Supprimer</a>
+        </td>
     </tr>
     <?php endforeach; ?>
     </tbody>
