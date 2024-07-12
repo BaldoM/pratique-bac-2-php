@@ -9,8 +9,8 @@
 
 
 // Connexion à la base de données access
- var_dump(file_exists(__DIR__ . DIRECTORY_SEPARATOR . 'bac-2.accdb'));
-//$cnx = new PDO('odbc:Driver={Microsoft Access Driver (*.mdb, *.accdb)};Dbq=' . __DIR__ . DIRECTORY_SEPARATOR . 'bac-2.accdb;Uid=;Pwd=');
+// var_dump(file_exists(__DIR__ . DIRECTORY_SEPARATOR . 'bac-2.accdb'));
+$cnx = new PDO('odbc:Driver={Microsoft Access Driver (*.mdb, *.accdb)};Dbq=' . __DIR__ . DIRECTORY_SEPARATOR . 'bac-2.accdb;Uid=;Pwd=');
 
 
 // Gestion des erreurs
